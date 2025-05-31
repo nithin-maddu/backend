@@ -8,7 +8,7 @@ const { createStudent, readall } = require('./controllers/studentController');
 const { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct } = require('./controllers/productController');
 
 app.use(express.json());
-app.use(cors());
+app.use(cors('https://fakestoreapi.com/products'));
 
 mongoose.connect('mongodb+srv://nithinmaddu13:Maddu@cluster0.mzdenph.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => console.log('db connected'))
