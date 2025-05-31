@@ -16,13 +16,10 @@ mongoose.connect('mongodb+srv://nithinmaddu13:Maddu@cluster0.mzdenph.mongodb.net
   .then(() => console.log('db connected'))
   .catch(err => console.log(err));
 
-app.get('/', authMiddleware, (req, res) => {
+app.get('/', (req, res) => {
   res.end("hi from express");
 });
 
-// Auth routes ✅
-app.post('/api/auth/register', registerUser);
-app.post('/api/auth/login', loginUser);
 
 // Student APIs
 app.post('/api/students', createStudent);
