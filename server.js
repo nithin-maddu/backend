@@ -1,13 +1,12 @@
-const express = require('express');
+ const express = require('express');
+const app = express();
+const port = 4000;
 const mongoose = require('mongoose');
 const cors = require('cors');
-const path = require('path');
-const app = express();
-const port = process.env.PORT || 4000;
 
 const { createStudent, readall } = require('./controllers/studentController');
 const { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct } = require('./controllers/productController');
-const { registerUser, loginUser } = require('./controllers/authController');
+const { registerUser, loginUser } = require('./controllers/authController'); // ✅ Add this
 const authMiddleware = require('./middleware/authMiddleware');
 
 app.use(express.json());
@@ -17,31 +16,25 @@ mongoose.connect('mongodb+srv://nithinmaddu13:Maddu@cluster0.mzdenph.mongodb.net
   .then(() => console.log('db connected'))
   .catch(err => console.log(err));
 
-// Routes
 app.get('/', authMiddleware, (req, res) => {
-  res.send("Hi from Express");
+  res.end("hi from express");
 });
 
+// Auth routes ✅
 app.post('/api/auth/register', registerUser);
 app.post('/api/auth/login', loginUser);
 
+// Student APIs
 app.post('/api/students', createStudent);
 app.get('/api/students', readall);
 
-app.post('/api/products', authMiddleware, createProduct);
-app.get('/api/products', authMiddleware, getAllProducts);
-app.get('/api/products/:id', authMiddleware, getProductById);
-app.put('/api/products/:id', authMiddleware, updateProduct);
-app.delete('/api/products/:id', authMiddleware, deleteProduct);
-
-// For React frontend (optional - production only)
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  );
-}
+// Product APIs
+app.post('/api/products', createProduct);
+app.get('/api/products', getAllProducts);
+app.get('/api/products/:id', getProductById);
+app.put('/api/products/:id', updateProduct);
+app.delete('/api/products/:id', deleteProduct);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log('server is running');
 });
