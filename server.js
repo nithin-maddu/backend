@@ -27,7 +27,7 @@ mongoose.connect('mongodb+srv://nithinmaddu13:Maddu@cluster0.mzdenph.mongodb.net
 
 app.use(cors())
 
-app.get('/',authMiddleware,(req,res)=>{
+app.get('/',(req,res)=>{
 res.end("hi from express")
 })
 
