@@ -6,8 +6,6 @@ const cors = require('cors');
 
 const { createStudent, readall } = require('./controllers/studentController');
 const { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct } = require('./controllers/productController');
-const { registerUser, loginUser } = require('./controllers/authController'); // ✅ Add this
-const authMiddleware = require('./middleware/authMiddleware');
 
 app.use(express.json());
 app.use(cors());
